@@ -1,7 +1,6 @@
 package com.ecommerce.productservice.thirdpartyclientproductservice.fakestore;
 
 
-import com.ecommerce.productservice.dtos.FakeStoreProductDto;
 import com.ecommerce.productservice.dtos.GenericProductDto;
 import com.ecommerce.productservice.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class FakeStoreProductServiceClient {
 
     public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder){
         this.restTemplateBuilder = restTemplateBuilder;
-        this.SpecificProductUrl = FakeStoreBaseUrl + FakeStoreProductPathUrl + "{id}";;
+        this.SpecificProductUrl = FakeStoreBaseUrl + FakeStoreProductPathUrl + "{id}";
         this.CreateProductUrl = FakeStoreBaseUrl + FakeStoreProductPathUrl;
 
     }

@@ -1,14 +1,10 @@
 package com.ecommerce.productservice.controllers;
 
-import com.ecommerce.productservice.dtos.ExceptionDto;
-import com.ecommerce.productservice.dtos.FakeStoreProductDto;
 import com.ecommerce.productservice.dtos.GenericProductDto;
 import com.ecommerce.productservice.exceptions.ProductNotFoundException;
 import com.ecommerce.productservice.services.ProductService;
+import com.ecommerce.productservice.thirdpartyclientproductservice.fakestore.FakeStoreProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,19 +15,23 @@ public class ProductController {
 
 
     private ProductService productService;
+    private FakeStoreProductService fakeStoreProductService;
 
-    public ProductController(@Qualifier("FakeStoreProductService") ProductService productservice){
+    public ProductController(@Qualifier("FakeStoreProductService") FakeStoreProductService fakeStoreProductService,
+                             @Qualifier("SelfProductServiceImpl") ProductService productservice
+    ){
         this.productService = productservice;
+        this.fakeStoreProductService = fakeStoreProductService;
     }
 
     @GetMapping
     public List<GenericProductDto> getAllProducts(){
-       return productService.getallProducts();
+       return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public GenericProductDto getproductbyId(@PathVariable("id")Long id) throws ProductNotFoundException {
-      GenericProductDto genericProductDto=  productService.getproductbyId(id);
+    public GenericProductDto getproductbyId(@PathVariable("id")String id) throws ProductNotFoundException {
+      GenericProductDto genericProductDto=  productService.getProductById(id);
         return genericProductDto;
     }
 
@@ -41,13 +41,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public GenericProductDto deleteproductbyId(@PathVariable("id") Long id){
+    public GenericProductDto deleteproductbyId(@PathVariable("id") String id){
         return  productService.deleteProduct(id);
     }
 
 
     @PutMapping("/{id}")
-    public GenericProductDto updateproductbyId(@PathVariable("id") Long id , @RequestBody GenericProductDto genericProductDto){
+    public GenericProductDto updateproductbyId(@PathVariable("id") String id , @RequestBody GenericProductDto genericProductDto){
         return productService.updateProduct(id , genericProductDto);
 
     }
