@@ -3,7 +3,7 @@ package com.ecommerce.productservice.controllers;
 import com.ecommerce.productservice.dtos.GenericProductDto;
 import com.ecommerce.productservice.exceptions.ProductNotFoundException;
 import com.ecommerce.productservice.services.ProductService;
-import com.ecommerce.productservice.thirdpartyclientproductservice.fakestore.FakeStoreProductService;
+import com.ecommerce.productservice.thirdpartyclientproductservice.fakestore.FakeStoreProductServiceClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +15,13 @@ public class ProductController {
 
 
     private ProductService productService;
-    private FakeStoreProductService fakeStoreProductService;
+    private FakeStoreProductServiceClient fakeStoreProductServiceClient;
 
-    public ProductController(@Qualifier("FakeStoreProductService") FakeStoreProductService fakeStoreProductService,
+    public ProductController(@Qualifier("FakeStoreProductService") FakeStoreProductServiceClient fakeStoreProductServiceClient,
                              @Qualifier("SelfProductServiceImpl") ProductService productservice
     ){
         this.productService = productservice;
-        this.fakeStoreProductService = fakeStoreProductService;
+        this.fakeStoreProductServiceClient = fakeStoreProductServiceClient;
     }
 
     @GetMapping
@@ -30,8 +30,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public GenericProductDto getproductbyId(@PathVariable("id")String id) throws ProductNotFoundException {
-      GenericProductDto genericProductDto=  productService.getProductById(id);
+    public GenericProductDto getproductbyId(@PathVariable("id")Long id) throws ProductNotFoundException {
+      //GenericProductDto genericProductDto=  productService.getProductById(id);
+        GenericProductDto genericProductDto = fakeStoreProductServiceClient.getproductbyId(id);
         return genericProductDto;
     }
 

@@ -22,9 +22,9 @@ public class Product extends  BaseModel{
 
     private int productPrice;
 
-    @OneToOne
+/*    @OneToOne
     @Cascade({CascadeType.PERSIST,CascadeType.REMOVE})
-    private Price price;
+    private Price price;*/
 
     @ManyToOne
     @JoinColumn(name = "category_Id")

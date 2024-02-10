@@ -19,15 +19,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service("SelfProductServiceImpl")
-public class SelfProductServiceImpl implements  ProductService{
+public class SelfProductServiceImpl implements  ProductService {
 
-    private RestTemplateBuilder restTemplateBuilder;
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
 
-    public SelfProductServiceImpl(RestTemplateBuilder restTemplateBuilder, ProductRepository productRepository,
+    public SelfProductServiceImpl(ProductRepository productRepository,
                                   CategoryRepository categoryRepository) {
-        this.restTemplateBuilder = restTemplateBuilder;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
     }
@@ -111,4 +109,6 @@ public class SelfProductServiceImpl implements  ProductService{
         genericProductDto.setPrice(product.getProductPrice());
         return genericProductDto;
     }
+
+
 }
